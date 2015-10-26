@@ -52,6 +52,21 @@ module.exports = {
 			return res.send(jsonResults);
 		});
 
+	},
+	fullTankoubon: function (req, res) {
+		console.log(req);
+		var tankoubonPath = tankoubons + '/SakuranboSyndrome';
+
+		sails.log(tankoubonPath);
+		
+        diretoryTreeToObj(tankoubonPath, function (err, jsonResults) {
+			sails.log(jsonResults);
+			if (err) {
+				sails.error(err);
+				throw error;
+			}
+			return res.send(jsonResults);
+		});
 	}
 };
 

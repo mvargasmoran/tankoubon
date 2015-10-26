@@ -34,7 +34,11 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
+  '/series': { view: 'series' },
+  '/allSeries': 'SeriesController.allSeries',
+  '/fullTree': 'SeriesController.fullTree',
+  '/fullTankoubon': 'SeriesController.fullTankoubon'
 
   /***************************************************************************
   *                                                                          *
