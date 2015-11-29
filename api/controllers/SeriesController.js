@@ -8,12 +8,12 @@
  * @help        :: See http://sailsjs.org/documentation/concepts/Controllers
  */
 
+
 var exec = require('child_process').exec,
 	fs   = require("fs"),
 	path = require("path");
 
 var tankoubons = "assets/tankoubons/";
-
 
 
 module.exports = {
@@ -30,7 +30,7 @@ module.exports = {
 		fs.readdir(tankoubons, function (err, files) {
             
 			var series = [];
-            
+			
 			for (var i = 0; i < files.length; i++) {
 				
 				if ( fs.statSync( tankoubons + files[i] ).isDirectory() ) {
@@ -42,7 +42,7 @@ module.exports = {
 		});
 	},
 	fullTree: function (req, res) {
-
+		
 		diretoryTreeToObj(tankoubons, function(err, jsonResults){
 			sails.log(jsonResults);
 			if(err){
@@ -51,12 +51,12 @@ module.exports = {
 			}
 			return res.send(jsonResults);
 		});
-
+		
 	},
 	fullTankoubon: function (req, res) {
 		console.log(req);
 		var tankoubonPath = tankoubons + '/SakuranboSyndrome';
-
+		
 		sails.log(tankoubonPath);
 		
         diretoryTreeToObj(tankoubonPath, function (err, jsonResults) {
