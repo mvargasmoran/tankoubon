@@ -55,7 +55,10 @@ module.exports = {
 	},
 	fullTankoubon: function (req, res) {
 		console.log(req);
-		var tankoubonPath = tankoubons + '/SakuranboSyndrome';
+
+		console.log("requesting SERIE: " + req.param('serie') );
+
+		var tankoubonPath = tankoubons + req.param('serie');
 		
 		sails.log(tankoubonPath);
 		
@@ -70,6 +73,58 @@ module.exports = {
 	}
 };
 
+///////////////////////// ///////////////////////// ///////////////////////// /////////////////////////
+
+var diretoryTreeToObj = function(dir, done) {
+    var results = [];
+
+    fs.readdir(dir, function(err, list) {
+        if (err)
+            return done(err);
+
+        var pending = list.length;
+
+        if (!pending)
+            return done(null, {name: path.basename(dir), type: 'folder', children: results});
+
+        list.forEach(function(file) {
+            file = path.resolve(dir, file);
+            fs.stat(file, function(err, stat) {
+                if (stat && stat.isDirectory()) {
+                    diretoryTreeToObj(file, function(err, res) {
+                        results.push({
+                            name: path.basename(file),
+                            type: 'folder',
+                            children: res
+                        });
+                        if (!--pending)
+                            done(null, results);
+                    });
+                }
+                else {
+                	if (path.basename(file) !== '.DS_Store' ) {
+                		results.push({
+                			type: 'file',
+                			name: path.basename(file)
+                		});
+                	}
+                	if (!--pending)
+                		done(null, results);
+                }
+            });
+        });
+    });
+};
+
+var dirTree = ('/path/to/dir');
+
+diretoryTreeToObj(dirTree, function(err, res){
+    if(err)
+        console.error(err);
+
+    console.log(JSON.stringify(res));
+});
+
 
 /*
 ************************************
@@ -79,4 +134,4 @@ module.exports = {
 	
 *************************************
 */
-var diretoryTreeToObj=function(a,b){var c=[];fs.readdir(a,function(d,e){if(d)return b(d);var f=e.length;return f?void e.forEach(function(d){d=path.resolve(a,d),fs.stat(d,function(a,e){e&&e.isDirectory()?diretoryTreeToObj(d,function(a,e){c.push({name:path.basename(d),type:"folder",children:e}),--f||b(null,c)}):(c.push({type:"file",name:path.basename(d)}),--f||b(null,c))})}):b(null,{name:path.basename(a),type:"folder",children:c})})};
+// var diretoryTreeToObj=function(a,b){var c=[];fs.readdir(a,function(d,e){if(d)return b(d);var f=e.length;return f?void e.forEach(function(d){d=path.resolve(a,d),fs.stat(d,function(a,e){e&&e.isDirectory()?diretoryTreeToObj(d,function(a,e){c.push({name:path.basename(d),type:"folder",children:e}),--f||b(null,c)}):(c.push({type:"file",name:path.basename(d)}),--f||b(null,c))})}):b(null,{name:path.basename(a),type:"folder",children:c})})};

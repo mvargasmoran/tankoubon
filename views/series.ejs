@@ -1,10 +1,42 @@
-Series: <br>
-<!-- <img style="width: 100px;" src="/tankoubons/HantsuXTorasshu/cap-03/img000001.png"> -->
+<div id="app">
+	Series:
+	<ul v-if="series">
+		<li v-if="!series">waiting for available series... </li>
+		<li v-for="serie in series">
+			<a v-on:click.prevent="showChapters(serie)" href="/fullTankoubon/{{ serie }}">{{ serie }}</a>
+		</li>
+	</ul>
+	<ul v-if="!series">
+		<li>...Not series available yet</li>
+	</ul>
 
-<br> <br> <br>
+	<ul>
+		<li v-for="chapters in tankoubon">
 
-<% if (typeof error!== 'undefined') { %>
-<%= error %>
-<% } else { %>
-    this is ready
-<% } %>
+			<small>{{ chapters.name }}</small>
+			<img 
+				v-if="chapters.type === 'folder'" 
+				src="/tankoubons/{{ currentTankoubon }}/{{ chapters.name }}/{{ chapters.children[0].name }}" 
+				alt="" 
+				style="width: 120px;"
+			>
+			<img
+				src="/tankoubons/{{ currentTankoubon }}/{{ chapters.name }}"
+				v-else="chapters.type === 'folder'" 
+				alt="" 
+				style="width: 120px;"
+			>
+
+			<ul v-if="chapters.type === 'folder'">
+				<li v-for="images in chapters.children">
+					<small>{{ images.name }}</small>
+					<img src="/tankoubons/{{currentTankoubon}}/{{chapters.name}}/{{ images.name }}" alt="" style="width: 120px;">
+				</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<p>
+		{{ tankoubon | json }}
+	</p>
+</div>

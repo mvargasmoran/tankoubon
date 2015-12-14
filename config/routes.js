@@ -38,7 +38,7 @@ module.exports.routes = {
   '/series': { view: 'series' },
   '/allSeries': 'SeriesController.allSeries',
   '/fullTree': 'SeriesController.fullTree',
-  '/fullTankoubon': 'SeriesController.fullTankoubon'
+  '/fullTankoubon/:serie': 'SeriesController.fullTankoubon'
 
   /***************************************************************************
   *                                                                          *
