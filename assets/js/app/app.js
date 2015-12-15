@@ -6,7 +6,8 @@ new Vue({
 		series: null,
 		tankoubon: null,
 		currentTankoubon: null,
-		currentChapter: null
+		currentChapter: null,
+		currentImageUrl: null
 	},
 	created: function () {
 		this.fetchSeries();
@@ -15,11 +16,16 @@ new Vue({
     	currentBranch: 'fetchData'
   	},
 	methods: {
+		displayImage: function (url) {
+			var self = this;
+			self.currentImageUrl = url;
+		},
 		showChapters: function (serieName) {
 
 			console.log(serieName)
 
 			var self = this;
+			self.currentTankoubon = serieName;
 			self.currentTankoubon = serieName;
 			self.tankoubon = this.fetchTankoubon(serieName);
 			console.log(self.tankoubon);

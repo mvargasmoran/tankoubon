@@ -1,3 +1,33 @@
+<style>
+	.foobar{
+		border: 1px solid darkorchid;
+		border: 1px solid darkorchid;
+		float: left;
+		margin-left: -8em;
+	}
+	.fobar:hover{
+		z-index: 999;
+	}
+	.thumb{
+		height: 120px;
+		
+	}
+	.viewer{
+		position: fixed;
+		top: 0px;
+		right: 10px;
+		border: 1px solid hotpink;
+
+		height: 100%;
+
+		height: 100%;
+		width: auto;
+		vertical-align: top;
+		display: block;
+		margin: 0 auto;
+		/*display: none;*/
+	}
+</style>
 <div id="app">
 	Series:
 	<ul v-if="series">
@@ -13,30 +43,52 @@
 	<ul>
 		<li v-for="chapters in tankoubon">
 
-			<small>{{ chapters.name }}</small>
+			<!-- <small>{{ chapters.name }}</small> -->
 			<img 
-				v-if="chapters.type === 'folder'" 
-				src="/tankoubons/{{ currentTankoubon }}/{{ chapters.name }}/{{ chapters.children[0].name }}" 
-				alt="" 
-				style="width: 120px;"
+			v-if="chapters.type === 'folder'" 
+			src="/tankoubons/{{ currentTankoubon }}/{{ chapters.name }}/{{ chapters.children[0].name }}" 
+			alt="" 
+			class="thumb"
 			>
 			<img
-				src="/tankoubons/{{ currentTankoubon }}/{{ chapters.name }}"
-				v-else="chapters.type === 'folder'" 
-				alt="" 
-				style="width: 120px;"
+			src="/tankoubons/{{ currentTankoubon }}/{{ chapters.name }}"
+			v-else="chapters.type === 'folder'" 
+			alt="" 
+			class="thumb"
 			>
 
 			<ul v-if="chapters.type === 'folder'">
 				<li v-for="images in chapters.children">
-					<small>{{ images.name }}</small>
-					<img src="/tankoubons/{{currentTankoubon}}/{{chapters.name}}/{{ images.name }}" alt="" style="width: 120px;">
+					<!-- <small>{{ images.name }}</small> -->
+
+					<!-- <a 
+						href="/tankoubons/{{currentTankoubon}}/{{chapters.name}}/{{ images.name }}"
+							v-on:click.prevent='displayImage("/tankoubons/{{currentTankoubon}}/{{chapters.name}}/{{ images.name }}")'
+							> -->
+							<img
+							v-on:click.prevent='displayImage( "/tankoubons/" 
+							+ currentTankoubon 
+							+ "/" 
+							+ chapters.name 
+							+ "/" 
+							+ images.name )'
+
+							src="/tankoubons/{{currentTankoubon}}/{{chapters.name}}/{{ images.name }}" 
+
+							alt="/tankoubons/{{currentTankoubon}}/{{chapters.name}}/{{ images.name }}"
+							class="thumb"
+							>
+							<!-- </a> -->
+						</li>
+					</ul>
 				</li>
 			</ul>
-		</li>
-	</ul>
-	
-	<p>
-		{{ tankoubon | json }}
-	</p>
-</div>
+			
+			<div id="alerts">nothing to alert yet</div>
+
+			<img src="{{ currentImageUrl }}" class="paged-image">
+
+			<p>
+				{{ tankoubon | json }}
+			</p>
+		</div>
