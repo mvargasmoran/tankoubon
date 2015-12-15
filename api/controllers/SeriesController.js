@@ -102,7 +102,7 @@ var diretoryTreeToObj = function(dir, done) {
                     });
                 }
                 else {
-                	if (path.basename(file) !== '.DS_Store' ) {
+                	if (path.basename(file) !== '.DS_Store' && path.basename(file) !== 'Thumbs.db' ) {
                 		results.push({
                 			type: 'file',
                 			name: path.basename(file)
